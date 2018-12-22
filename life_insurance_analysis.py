@@ -4,15 +4,17 @@
 
 
 # Import Modules
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pathlib import Path
+
 import os
+from pathlib import Path
+from subprocess import call
 
 from lifelines import KaplanMeierFitter
 from imblearn.over_sampling import SMOTE
-from subprocess import call, Popen
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -80,16 +82,39 @@ def features_target(data):
 
 
 def enc_dec(X, y):
+    # Categorical Variables
     cat = ["Burial_Day", "Burial_Week", "Gender", "Color", "County_Burial",
            "County_Morgue", "Cause_of_Death", "Married", "Spouse_Alive",
            "Spouse_gender", "Morgue"]
+
+    # Continuous Variables
     ints = ["Word_Count", "Death_to_Announce", "Death_to_Burial",
             "Announce_to_Burial", "No_of_Relatives", "Distance_Morgue"]
 
+    # Expressions to omit in Continuous Variables
+    om = ["#REF!", "o", "#VALUE!", "9/29/1782", "10/15/1782", "10/20/1782",
+          "7/30/1782", "11/19/1782", "5/25/2017", "5/27/2017", "5/26/2017",
+          "2/24/2017", "11/16/1782", "2/18/2017", "11/21/1782", "2/17/2017",
+          "11/15/1782", "2/23/2017", "2/25/2017", "2/27/2017", "10/22/1782",
+          "3/17/2017", "3/20/2017", "3/18/2017", "10/18/1782", "3/15/2017",
+          "3/14/2017", "10/29/1782", "3/31/2017", "3/29/2017", "3/30/2017",
+          "10/14/1782", "3/21/2017", "3/25/2017", "3/22/2017", "11/27/1782",
+          "11/26/1782"]
+
+    # Initialize an Empty Dataframe
     X_e = pd.DataFrame()
+
+    # Encode Categorical Variables
     for c in cat:
         lef = LabelEncoder()
         X_e[c] = lef.fit_transform(X[c].astype("str"))
+
+    # Encode Float Variables Correctly
+    for i in ints:
+        X_e[i] = X[i].str.replace(",", "").replace(om, np.nan).astype(float)
+
+    # Replace Missing Values with Variable Median
+    X_e.fillna(X_e.mean(), inplace=True)
 
     let = LabelEncoder()
     y_e = let.fit_transform(y.astype("str"))
@@ -111,7 +136,7 @@ def split_val(X_o, y_o):
     X, y = SMOTE(random_state=11).fit_sample(X_o, y_o)
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                         test_size=0.01,
-                                                        random_state=21)
+                                                        random_state=6)
 
     return X_train, X_test, y_train, y_test
 
