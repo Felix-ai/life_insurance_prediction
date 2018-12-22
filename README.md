@@ -37,6 +37,9 @@ Note that in binary classification,
 *	recall of the positive class is also known as “sensitivity”;
 *	recall of the negative class is “specificity”.
 
+### Confusion Matrix
+![alt text](images/Confusion_Matrix.png "Confusion Matrix")
+
 The objective was to determine whether an obituary will explicitly request for fund raising
 (yes/no). This translates to a binary classification task.
 
