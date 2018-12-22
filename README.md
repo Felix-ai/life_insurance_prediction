@@ -27,7 +27,7 @@ Fundraiser variable(the target variable) were dropped. These cases can be used a
 
 As is the norm, the dataset was split in training, validation and test sets [80:10:10].
 
-On fitting the model, the training accuracy was 85.42% while the test accuracy was 78.57%
+On fitting the model, the training accuracy was 84.40% while the test accuracy was 78.57%
 
 Sensitvity was 0.86 while specificity was 0.71.
 The F1-Score for the Negative Class (No) was 0.77 while the F1-Score for the positive class
