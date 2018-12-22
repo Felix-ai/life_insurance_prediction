@@ -1,6 +1,6 @@
-#
-#
-#
+# ========================================
+# LIFE INSURANCE ANALYSIS
+# ========================================
 
 
 # Import Modules
@@ -11,7 +11,7 @@ import seaborn as sns
 
 from pathlib import Path
 import os
-# from lifelines import KaplanMeierFitter
+from lifelines import KaplanMeierFitter
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -90,10 +90,9 @@ def enc_dec(X, y):
     let = LabelEncoder()
     y_e = let.fit_transform(y.astype("str"))
 
-    # # Store Preprocessed Dataset
-    # os.makedirs("tmp", exist_ok=True)
-    # data.to_feather("tmp/insurance-raw")
-
+    # Store Preprocessed Dataset
+    os.makedirs("tmp", exist_ok=True)
+    X_e.to_feather("tmp/features-raw")
 
     # EDA
     print("Target Classes:")
@@ -114,9 +113,6 @@ def split_val(X, y):
 
 # Train the Model
 def model(X_train, X_val, X_test, y_train, y_val, y_test):
-    # Load Preprocessed Dataset
-    # df_raw = pd.read_feather("tmp/insurance-raw")
-
     # Fit Model
     clf = RandomForestClassifier(n_estimators=100, max_depth=7,
                                  bootstrap=False, n_jobs=-1, oob_score=False)
@@ -149,13 +145,16 @@ def model(X_train, X_val, X_test, y_train, y_val, y_test):
 
 
 # Kaplan-meier survival curve
-def KapMeir(df):
+def KapMeir(df_raw, let):
     # set some plotting aesthetics
     sns.set(palette="colorblind", font_scale=1.35,
             rc={"figure.figsize": (12, 9), "axes.facecolor": ".92"})
 
+    df = df_raw.loc[:, ["Age", "Fundraising"]].dropna(axis=0)
+    eo = let.transform(df["Fundraising"])
+
     kmf = KaplanMeierFitter()
-    kmf.fit(durations=df["Age"], event_observed=df["Fundraising"])
+    kmf.fit(durations=df["Age"], event_observed=eo)
 
     # plot the KM estimate
     kmf.plot()
@@ -175,8 +174,5 @@ if __name__ == "__main__":
     X_tv, X_test, y_tv, y_test = split_val(features_e, label_e)
     X_train, X_val, y_train, y_val = split_val(X_tv, y_tv)
     model(X_train, X_val, X_test, y_train, y_val, y_test)
+    KapMeir(data_raw, let)
 
-
-    # # EDA
-    # pd.plotting.scatter_matrix(data)
-    # plt.show()
