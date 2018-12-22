@@ -11,6 +11,11 @@ marketing of life insurance products.
 ## Kaplan-mier Survival Curve
 ![alt text](images/Kaplan-meier_Survival_Curve.png "Kaplan-meier Survival Curve")
 
+The first thing that you should notice is that the Kaplan-Meier estimate is a continous
+function. The line represents the probability that an individual is still alive after a
+given time t. For example, when t=40, the probability that an individual is still alive after
+that point is about 85%.
+
 
 ## Prediction of deaths that are likely to need fundraising
 The task was carried out in Python.
