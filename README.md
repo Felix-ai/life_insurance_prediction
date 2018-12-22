@@ -18,7 +18,20 @@ The task was carried out in Python.
 After loading the data set, simple EDA was carried to familiarize ones self with  the data set.
 Then identification of features and targets followed.
 Categorical variables in the dataset were then encoded and all cases with missing values for
-Fundraiser variable(the target variable) were dropped. These case can be used as test cases.
+Fundraiser variable(the target variable) were dropped. These cases can be used as test cases.
+
+As is the norm, the dataset was split in training, validation and test sets [80:10:10].
+
+On fitting the model, the trainin accuracy was 81.6% while the validation accuracy was 57.28%.
+The accuracy on the test set was 63.48%.
+
+						F1-Score	Sensitivity		Specificity
+Negative Class	-> No	0.42						0.33
+Postive Class	-> Yes	0.73		0.84
+
+Note that in binary classification,
+	recall of the positive class is also known as “sensitivity”;
+	recall of the negative class is “specificity”.
 
 The objective was to determine whether an obituary will explicitly request for fund raising
 (yes/no). This translates to a binary classification task.
