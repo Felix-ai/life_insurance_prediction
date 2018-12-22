@@ -123,6 +123,8 @@ def model(X, X_test, y, y_test):
     clf.fit(X_train, y_train)
     train_a = clf.score(X_train, y_train)
 
+    print(clf.estimators_[0].tree_)
+
     # EDA
     print("Training Accuracy: \t{:.4f}".format(train_a))
     print("-" * 70)
@@ -149,9 +151,25 @@ def model(X, X_test, y, y_test):
     print(cmatrix)
     print("-" * 70)
 
+    # Plot Confusion Matrix
+    labels = ["No", "Yes"]
+    ax = plt.subplot()
+    sns.heatmap(cmatrix, annot=True, ax=ax)
+
+    # labels, title and ticks
+    ax.set_xlabel('Predicted labels')
+    ax.set_ylabel('True labels')
+    ax.set_title('Confusion Matrix')
+    ax.xaxis.set_ticklabels(labels)
+    ax.yaxis.set_ticklabels(labels)
+
+    plt.show()
+
 
 # Kaplan-meier Survival Curve
 def KapMeir(df_raw, let):
+    plt.clf()
+
     # set some plotting aesthetics
     sns.set(palette="colorblind", font_scale=1.35,
             rc={"figure.figsize": (12, 9), "axes.facecolor": ".92"})
