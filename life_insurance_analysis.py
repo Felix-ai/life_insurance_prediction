@@ -179,7 +179,7 @@ def est_plot(clf, X_e, let):
                     precision=2, filled=True)
 
     # Convert to png using system command (requires Graphviz)
-    call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png', '-Gdpi=600'],
+    call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png'],
           shell=True)
 
 
