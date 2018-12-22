@@ -25,9 +25,9 @@ As is the norm, the dataset was split in training, validation and test sets [80:
 On fitting the model, the trainin accuracy was 81.6% while the validation accuracy was 57.28%.
 The accuracy on the test set was 63.48%.
 
-						F1-Score	Sensitivity		Specificity
-*Negative Class	-> No	0.42						0.33
-*Postive Class	-> Yes	0.73		0.84
+								F1-Score	Sensitivity		Specificity
+* Negative Class	-> No		0.42						0.33
+* Postive Class		-> Yes		0.73		0.84
 
 Note that in binary classification,
 *	recall of the positive class is also known as “sensitivity”;
