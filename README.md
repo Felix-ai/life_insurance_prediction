@@ -1,4 +1,4 @@
-## Life Insurance Prediction
+## Life Insurance Prediction Using Machine Learning
 
 In the data folder, you will find data on mortality in Kenya.
 The obituaries dataset was garthered from the Daily Nation.
@@ -25,13 +25,14 @@ Then identification of features and targets followed.
 Categorical variables in the dataset were then encoded and all cases with missing values for
 Fundraiser variable(the target variable) were dropped. These cases can be used as test cases.
 
-As is the norm, the dataset was split in training, validation and test sets [80:10:10].
+As is the norm, the dataset was split in training and test sets in the ratio 99:1 as the
+dataset size was small.
 
-On fitting the model, the training accuracy was 84.40% while the test accuracy was 78.57%
+On fitting the model, the training accuracy was 76.46% while the test accuracy was 85.71%
 
-Sensitvity was 0.86 while specificity was 0.71.
-The F1-Score for the Negative Class (No) was 0.77 while the F1-Score for the positive class
-(Yes) was 0.80.
+Sensitvity was 0.78 while specificity was 1.00.
+The F1-Score for the Negative Class (No) was 0.83 while the F1-Score for the positive class
+(Yes) was 0.88.
 
 Note that in binary classification,
 *	recall of the positive class is also known as “sensitivity”;
@@ -39,6 +40,9 @@ Note that in binary classification,
 
 ### Confusion Matrix
 ![alt text](images/Confusion_Matrix.png "Confusion Matrix")
+
+### Sample Estimator
+![alt text](tree.png "Sample Estimator")
 
 The objective was to determine whether an obituary will explicitly request for fund raising
 (yes/no). This translates to a binary classification task.
