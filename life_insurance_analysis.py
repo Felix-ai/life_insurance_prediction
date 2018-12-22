@@ -11,9 +11,10 @@ import seaborn as sns
 from pathlib import Path
 import os
 from lifelines import KaplanMeierFitter
+from imblearn.over_sampling import SMOTE
 
 from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedShuffleSplit
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -58,6 +59,8 @@ def features_target(data):
     X = df.drop(clms, axis=1)
     y = df["Fundraising"]
 
+    cd = df.groupby(df["Fundraising"]).count() / len(df)
+
     # EDA
     print("Data Types:")
     print(X.dtypes)
@@ -68,7 +71,7 @@ def features_target(data):
     print("-" * 70)
 
     print("Class Distribution:")
-    print(df.groupby(df["Fundraising"]).count())
+    print(cd["Name"])
     print("-" * 70)
 
     return X, y
@@ -102,26 +105,32 @@ def enc_dec(X, y):
 
 
 # Split to Training, Validation and Testing Datasets
-def split_val(X, y):
+def split_val(X_o, y_o):
+    X, y = SMOTE().fit_sample(X_o, y_o)
     X_train, X_test, y_train, y_test = train_test_split(X, y,
-                                                        test_size=0.10,
-                                                        random_state=7)
+                                                        test_size=0.01,
+                                                        random_state=1)
+
+    # sss = StratifiedShuffleSplit(n_splits=5, test_size=0.1, random_state=6)
+    # sss.get_n_splits(X, y)
+    # for train_index, test_index in sss.split(X, y):
+    #     X_train, X_test = X[train_index], X[test_index]
+    #     y_train, y_test = y[train_index], y[test_index]
 
     return X_train, X_test, y_train, y_test
 
 
 # Train the Model
-def model(X_train, X_val, X_test, y_train, y_val, y_test):
+def model(X, X_test, y, y_test):
     # Fit Model
     clf = RandomForestClassifier(n_estimators=100, max_depth=7,
                                  bootstrap=False, n_jobs=-1, oob_score=False)
+
     clf.fit(X_train, y_train)
     train_a = clf.score(X_train, y_train)
-    val_a = clf.score(X_val, y_val)
 
     # EDA
     print("Training Accuracy: \t{:.4f}".format(train_a))
-    print("Validation Accuracy: \t{:.4f}".format(val_a))
     print("-" * 70)
 
     # Test Results
@@ -174,7 +183,6 @@ if __name__ == "__main__":
     data_raw = load_data()
     features, label = features_target(data_raw)
     features_e, label_e, lef, let = enc_dec(features, label)
-    X_tv, X_test, y_tv, y_test = split_val(features_e, label_e)
-    X_train, X_val, y_train, y_val = split_val(X_tv, y_tv)
-    model(X_train, X_val, X_test, y_train, y_val, y_test)
+    X_train, X_test, y_train, y_test = split_val(features_e, label_e)
+    model(X_train, X_test, y_train, y_test)
     KapMeir(data_raw, let)

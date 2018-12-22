@@ -27,12 +27,11 @@ Fundraiser variable(the target variable) were dropped. These cases can be used a
 
 As is the norm, the dataset was split in training, validation and test sets [80:10:10].
 
-On fitting the model, the trainin accuracy was 81.6% while the validation accuracy was 57.28%.
-The accuracy on the test set was 63.48%.
+On fitting the model, the training accuracy was 85.42% while the test accuracy was 78.57%
 
-Sensitvity was 0.84 while specificity was 0.33.
-The F1-Score for the Negative Class (No) was 0.42 while the F1-Score for the positive class (Yes)
-was 0.73.
+Sensitvity was 0.86 while specificity was 0.71.
+The F1-Score for the Negative Class (No) was 0.77 while the F1-Score for the positive class
+(Yes) was 0.80.
 
 Note that in binary classification,
 *	recall of the positive class is also known as “sensitivity”;
@@ -45,7 +44,7 @@ Different classification algotithms could be employed. In this case, a Random Fo
 was used to predict deaths that are likely to need fundraising. The main advantage been that it,
 is an ensembe algorithmn.
 
-# Observations
+## Observations
 The class distribution was not equal. 60% of the case belong to the positive class (Yes) while
 39% beloged to the negative class (No).
 
