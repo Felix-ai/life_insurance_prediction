@@ -44,3 +44,10 @@ The objective was to determine whether an obituary will explicitly request for f
 Different classification algotithms could be employed. In this case, a Random Forest Classifier
 was used to predict deaths that are likely to need fundraising. The main advantage been that it,
 is an ensembe algorithmn.
+
+# Observations
+The class distribution was not equal. 60% of the case belong to the positive class (Yes) while
+39% beloged to the negative class (No).
+
+Sub-sampling of the minimum class can be carried out to ensure that the model is not only
+predictive of the majority class.
