@@ -15,9 +15,14 @@ marketing of life insurance products.
 ## Prediction of deaths that are likely to need fundraising
 The task was carried out in Python.
 
-After loading the data set, the first task was identifying the features and the targets.
+After loading the data set, simple EDA was carried to familiarize ones self with  the data set.
+Then identification of features and targets followed.
+Categorical variables in the dataset were then encoded and all cases with missing values for
+Fundraiser variable(the target variable) were dropped. These case can be used as test cases.
 
+The objective was to determine whether an obituary will explicitly request for fund raising
+(yes/no). This translates to a binary classification task.
 
-
-
-A Random Forest Classifier was used to predict deaths that are likely to need fundraising.
+Different classification algotithms could be employed. In this case, a Random Forest Classifier
+was used to predict deaths that are likely to need fundraising. The main advantage been that it,
+is an ensembe algorithmn.
