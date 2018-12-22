@@ -14,7 +14,7 @@ from lifelines import KaplanMeierFitter
 from imblearn.over_sampling import SMOTE
 
 from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split, StratifiedShuffleSplit
+from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -110,12 +110,6 @@ def split_val(X_o, y_o):
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                         test_size=0.01,
                                                         random_state=1)
-
-    # sss = StratifiedShuffleSplit(n_splits=5, test_size=0.1, random_state=6)
-    # sss.get_n_splits(X, y)
-    # for train_index, test_index in sss.split(X, y):
-    #     X_train, X_test = X[train_index], X[test_index]
-    #     y_train, y_test = y[train_index], y[test_index]
 
     return X_train, X_test, y_train, y_test
 
