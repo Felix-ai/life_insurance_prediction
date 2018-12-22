@@ -169,14 +169,14 @@ def model(X_train, X_test, y_train, y_test):
 
 
 def est_plot(clf, X_e, let):
-    estimator = clf.estimators_[1]
+    estimator = clf.estimators_[26]
 
     # Export as dot file
     export_graphviz(estimator, out_file='tree.dot',
                     feature_names=X_e.columns.values,
                     class_names=let.classes_,
                     rounded=True, proportion=False,
-                    precision=2, filled=True)
+                    precision=2, filled=True, max_depth=3)
 
     # Convert to png using system command (requires Graphviz)
     call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png'],
