@@ -45,8 +45,8 @@ was used to predict deaths that are likely to need fundraising. The main advanta
 is an ensembe algorithmn.
 
 ## Observations
-The class distribution was not equal. 60% of the case belong to the positive class (Yes) while
+The class distribution was not equal. 60% of the cases belong to the positive class (Yes) while
 39% beloged to the negative class (No).
 
-Sub-sampling of the minimum class can be carried out to ensure that the model is not only
-predictive of the majority class.
+Sub-sampling of the minimum class using SMOTE algorithm was carried out to ensure that the
+model is not only predictive of the majority class.
