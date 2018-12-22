@@ -4,7 +4,6 @@
 
 
 # Import Modules
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -121,7 +120,7 @@ def model(X_train, X_val, X_test, y_train, y_val, y_test):
     val_a = clf.score(X_val, y_val)
 
     # EDA
-    print("Training Accuracy: {:.4f}".format(train_a))
+    print("Training Accuracy: \t{:.4f}".format(train_a))
     print("Validation Accuracy: \t{:.4f}".format(val_a))
     print("-" * 70)
 
@@ -130,9 +129,13 @@ def model(X_train, X_val, X_test, y_train, y_val, y_test):
     y_pred = clf.predict(X_test)
     test_a = clf.score(X_test, y_test)
     creport = classification_report(y_test, y_pred)
+
+    # Note that in binary classification,
+    # recall of the positive class is also known as “sensitivity”;
+    # recall of the negative class is “specificity”.
     cmatrix = confusion_matrix(y_test, y_pred)
 
-    print("Test Accuarcy: {:.4f}".format(test_a))
+    print("Test Accuracy: {:.4f}".format(test_a))
     print("-" * 70)
 
     print("Classification Report:")
@@ -144,7 +147,7 @@ def model(X_train, X_val, X_test, y_train, y_val, y_test):
     print("-" * 70)
 
 
-# Kaplan-meier survival curve
+# Kaplan-meier Survival Curve
 def KapMeir(df_raw, let):
     # set some plotting aesthetics
     sns.set(palette="colorblind", font_scale=1.35,
@@ -175,4 +178,3 @@ if __name__ == "__main__":
     X_train, X_val, y_train, y_val = split_val(X_tv, y_tv)
     model(X_train, X_val, X_test, y_train, y_val, y_test)
     KapMeir(data_raw, let)
-
