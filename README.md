@@ -28,11 +28,10 @@ Fundraiser variable(the target variable) were dropped. These cases can be used a
 As is the norm, the dataset was split in training and test sets in the ratio 99:1 as the
 dataset size was small.
 
-On fitting the model, the training accuracy was 76.46% while the test accuracy was 85.71%
+On fitting the model, the training accuracy was 82.51% while the test accuracy was 85.71%
 
-Sensitvity was 0.78 while specificity was 1.00.
-The F1-Score for the Negative Class (No) was 0.83 while the F1-Score for the positive class
-(Yes) was 0.88.
+Both sensitvity and specificity was 0.86. The F1-Score for both Negative Class (No) and
+positive class (Yes) was also 0.86.
 
 Note that in binary classification,
 *	recall of the positive class is also known as “sensitivity”;
