@@ -6,9 +6,12 @@
 # Import Modules
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from pathlib import Path
 import os
+# from lifelines import KaplanMeierFitter
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -131,6 +134,7 @@ def model(X_train, X_val, X_test, y_train, y_val, y_test):
     y_pred = clf.predict(X_test)
     test_a = clf.score(X_test, y_test)
     creport = classification_report(y_test, y_pred)
+    cmatrix = confusion_matrix(y_test, y_pred)
 
     print("Test Accuarcy: {:.4f}".format(test_a))
     print("-" * 70)
@@ -138,6 +142,29 @@ def model(X_train, X_val, X_test, y_train, y_val, y_test):
     print("Classification Report:")
     print(creport)
     print("-" * 70)
+
+    print("Confusion Matrix:")
+    print(cmatrix)
+    print("-" * 70)
+
+
+# Kaplan-meier survival curve
+def KapMeir(df):
+    # set some plotting aesthetics
+    sns.set(palette="colorblind", font_scale=1.35,
+            rc={"figure.figsize": (12, 9), "axes.facecolor": ".92"})
+
+    kmf = KaplanMeierFitter()
+    kmf.fit(durations=df["Age"], event_observed=df["Fundraising"])
+
+    # plot the KM estimate
+    kmf.plot()
+
+    # Add title and y-axis label
+    plt.title("Kaplan-Meier Estimate")
+    plt.ylabel("Probability")
+
+    plt.show()
 
 
 # Run Script
