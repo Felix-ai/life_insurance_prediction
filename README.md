@@ -43,6 +43,12 @@ Note that in binary classification,
 ### Sample Estimator
 ![alt text](tree.png "Sample Estimator")
 
+The time period between death and burial is signicant in determining whether a particular
+family is asking for a fundraiser.
+
+The county where one will be burried also weighs in on whether individuals from that region
+will seek a fundraiser.
+
 The objective was to determine whether an obituary will explicitly request for fund raising
 (yes/no). This translates to a binary classification task.
 
