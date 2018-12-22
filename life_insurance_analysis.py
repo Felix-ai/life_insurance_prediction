@@ -7,16 +7,18 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 from pathlib import Path
 import os
+
 from lifelines import KaplanMeierFitter
 from imblearn.over_sampling import SMOTE
+from subprocess import call, Popen
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.tree import export_graphviz
 
 
 # Define Functions
@@ -106,24 +108,22 @@ def enc_dec(X, y):
 
 # Split to Training, Validation and Testing Datasets
 def split_val(X_o, y_o):
-    X, y = SMOTE().fit_sample(X_o, y_o)
+    X, y = SMOTE(random_state=11).fit_sample(X_o, y_o)
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                         test_size=0.01,
-                                                        random_state=1)
+                                                        random_state=21)
 
     return X_train, X_test, y_train, y_test
 
 
 # Train the Model
-def model(X, X_test, y, y_test):
+def model(X_train, X_test, y_train, y_test):
     # Fit Model
-    clf = RandomForestClassifier(n_estimators=100, max_depth=7,
+    clf = RandomForestClassifier(n_estimators=100, max_depth=5,
                                  bootstrap=False, n_jobs=-1, oob_score=False)
 
     clf.fit(X_train, y_train)
     train_a = clf.score(X_train, y_train)
-
-    print(clf.estimators_[0].tree_)
 
     # EDA
     print("Training Accuracy: \t{:.4f}".format(train_a))
@@ -165,6 +165,23 @@ def model(X, X_test, y, y_test):
 
     plt.show()
 
+    return clf
+
+
+def est_plot(clf, X_e, let):
+    estimator = clf.estimators_[1]
+
+    # Export as dot file
+    export_graphviz(estimator, out_file='tree.dot',
+                    feature_names=X_e.columns.values,
+                    class_names=let.classes_,
+                    rounded=True, proportion=False,
+                    precision=2, filled=True)
+
+    # Convert to png using system command (requires Graphviz)
+    call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png', '-Gdpi=600'],
+          shell=True)
+
 
 # Kaplan-meier Survival Curve
 def KapMeir(df_raw, let):
@@ -196,5 +213,6 @@ if __name__ == "__main__":
     features, label = features_target(data_raw)
     features_e, label_e, lef, let = enc_dec(features, label)
     X_train, X_test, y_train, y_test = split_val(features_e, label_e)
-    model(X_train, X_test, y_train, y_test)
+    clf = model(X_train, X_test, y_train, y_test)
+    est_plot(clf, features_e, let)
     KapMeir(data_raw, let)
